@@ -49,6 +49,7 @@ func AdminIndex(ctx *context.Context) error {
 	ctx.SetData("resetHooks", actions.IsRunning(actions.ResetHooks))
 	ctx.SetData("indexGists", actions.IsRunning(actions.IndexGists))
 	ctx.SetData("syncGistLanguages", actions.IsRunning(actions.SyncGistLanguages))
+	ctx.SetData("syncGithubGists", actions.IsRunning(actions.SyncGithubGists))
 	return ctx.Html("admin_index.html")
 }
 

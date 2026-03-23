@@ -84,6 +84,7 @@ type Gist struct {
 	NbForks         int
 	CreatedAt       int64
 	UpdatedAt       int64
+	GithubGistID    string // GitHub Gist ID for imported/synced gists
 
 	Likes    []User `gorm:"many2many:likes;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Forked   *Gist  `gorm:"foreignKey:ForkedID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
@@ -128,6 +129,15 @@ func GetGistByID(gistId string) (*Gist, error) {
 	gist := new(Gist)
 	err := db.Preload("User").Preload("Forked.User").Preload("Topics").
 		Where("gists.id = ?", gistId).
+		First(&gist).Error
+
+	return gist, err
+}
+
+func GetGistByGithubGistID(githubGistID string, userID uint) (*Gist, error) {
+	gist := new(Gist)
+	err := db.Preload("User").
+		Where("github_gist_id = ? AND user_id = ?", githubGistID, userID).
 		First(&gist).Error
 
 	return gist, err

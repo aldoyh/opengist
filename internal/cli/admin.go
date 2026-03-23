@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"github.com/thomiceli/opengist/internal/actions"
 	"github.com/thomiceli/opengist/internal/auth/password"
 	"github.com/thomiceli/opengist/internal/db"
 	"github.com/urfave/cli/v2"
@@ -13,6 +14,7 @@ var CmdAdmin = cli.Command{
 	Subcommands: []*cli.Command{
 		&CmdAdminResetPassword,
 		&CmdAdminToggleAdmin,
+		&CmdAdminSyncGithubGists,
 	},
 }
 
@@ -73,6 +75,33 @@ var CmdAdminToggleAdmin = cli.Command{
 		}
 
 		fmt.Printf("User %s admin set to %t\n", username, user.IsAdmin)
+		return nil
+	},
+}
+
+var CmdAdminSyncGithubGists = cli.Command{
+	Name:      "sync-github-gists",
+	Usage:     "Synchronize GitHub Gists into Opengist for users with linked GitHub accounts",
+	ArgsUsage: "[username]",
+	Action: func(ctx *cli.Context) error {
+		initialize(ctx)
+
+		if ctx.NArg() >= 1 {
+			// Sync a specific user
+			username := ctx.Args().Get(0)
+			fmt.Printf("Syncing GitHub gists for user %s...\n", username)
+			if err := actions.SyncGithubGistsForUser(username); err != nil {
+				fmt.Printf("Error syncing GitHub gists for user %s: %s\n", username, err)
+				return err
+			}
+			fmt.Printf("GitHub gists for user %s have been synced.\n", username)
+		} else {
+			// Sync all users with linked GitHub accounts
+			fmt.Println("Syncing GitHub gists for all users with linked GitHub accounts...")
+			actions.Run(actions.SyncGithubGists)
+			fmt.Println("GitHub gist sync complete.")
+		}
+
 		return nil
 	},
 }

@@ -46,3 +46,9 @@ func AdminSyncGistLanguages(ctx *context.Context) error {
 	go actions.Run(actions.SyncGistLanguages)
 	return ctx.RedirectTo("/admin-panel")
 }
+
+func AdminSyncGithubGists(ctx *context.Context) error {
+	ctx.AddFlash(ctx.Tr("flash.admin.sync-github-gists"), "success")
+	go actions.Run(actions.SyncGithubGists)
+	return ctx.RedirectTo("/admin-panel")
+}

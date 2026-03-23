@@ -18,6 +18,7 @@ func TestAdminActions(t *testing.T) {
 		"/admin-panel/reset-hooks",
 		"/admin-panel/index-gists",
 		"/admin-panel/sync-languages",
+		"/admin-panel/sync-github-gists",
 	}
 
 	s.Register(t, "thomas")

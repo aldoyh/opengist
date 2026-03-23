@@ -24,6 +24,7 @@ const (
 	ResetHooks
 	IndexGists
 	SyncGistLanguages
+	SyncGithubGists
 )
 
 var (
@@ -76,6 +77,8 @@ func Run(actionType int) {
 		functionToRun = indexGists
 	case SyncGistLanguages:
 		functionToRun = syncGistLanguages
+	case SyncGithubGists:
+		functionToRun = syncGithubGists
 	default:
 		log.Error().Msg("Unknown action type")
 	}

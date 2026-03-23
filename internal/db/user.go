@@ -19,6 +19,7 @@ type User struct {
 	MD5Hash            string // for gravatar, if no Email is specified, the value is random
 	AvatarURL          string
 	GithubID           string
+	GithubLogin        string
 	GitlabID           string
 	GiteaID            string
 	OIDCID             string `gorm:"column:oidc_id"`
@@ -111,6 +112,15 @@ func GetAllUsers(offset int) ([]*User, error) {
 		Limit(11).
 		Offset(offset * 10).
 		Order("id asc").
+		Find(&users).Error
+
+	return users, err
+}
+
+func GetAllUsersWithGithub() ([]*User, error) {
+	var users []*User
+	err := db.
+		Where("github_id != '' AND github_login != ''").
 		Find(&users).Error
 
 	return users, err

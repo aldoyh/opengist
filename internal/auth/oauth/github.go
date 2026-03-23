@@ -74,6 +74,7 @@ func (p *GitHubCallbackProvider) GetProviderUserSSHKeys() ([]string, error) {
 
 func (p *GitHubCallbackProvider) UpdateUserDB(user *db.User) {
 	user.GithubID = p.User.UserID
+	user.GithubLogin = p.User.NickName
 	user.AvatarURL = "https://avatars.githubusercontent.com/u/" + p.User.UserID + "?v=4"
 }
 
