@@ -46,6 +46,7 @@ export default defineConfig({
                     {text: 'OAuth Providers', link: '/oauth-providers'},
                     {text: 'Custom assets', link: '/custom-assets'},
                     {text: 'Custom links', link: '/custom-links'},
+                    {text: 'Arabic (RTL) Support', link: '/arabic-rtl'},
                     {text: 'Cheat Sheet', link: '/cheat-sheet'},
                     {text: 'Metrics', link: '/metrics'},
                     {text: 'Admin panel', link: '/admin-panel'},

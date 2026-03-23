@@ -69,9 +69,9 @@ gist.list.sort-by-updated: تاريخ التحديث
 gist.list.order-by-asc: الأقدم أولًا
 gist.list.order-by-desc: الأحدث أولًا
 gist.list.select-tab: اختر تبويبًا
-gist.list.liked: محبوب
-gist.list.likes: إعجاب
-gist.list.forked: متشعب
+gist.list.liked: المُعجَب بها
+gist.list.likes: إعجابات
+gist.list.forked: المتشعبة
 gist.list.forked-from: متشعب من
 gist.list.forks: تشعبات
 gist.list.files: ملفات
