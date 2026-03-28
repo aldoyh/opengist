@@ -2,6 +2,7 @@
     --red-diff: rgba(255, 0, 0, .1);
     --green-diff: rgba(0, 255, 128, .1);
     --git-diff: rgba(143, 143, 143, 0.38);
+    --font-mono: Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 html {
@@ -25,7 +26,7 @@ pre {
 }
 
 .code {
-    font-family: Menlo,Consolas,Liberation Mono,monospace;
+    font-family: var(--font-mono);
 }
 
 .code .line-num {
@@ -193,15 +194,17 @@ dl.dl-config dd {
 .pdfobject-container {
     @apply min-h-[700px] h-[700px];
 }
-/* ============================================================
- * RTL (Right-to-Left) support for Arabic and other RTL locales
- * ============================================================ */
 
+/* ─── Arabic / RTL Support ──────────────────────────────────────────────── */
+
+:root:lang(ar),
 [dir="rtl"] {
-    font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+    font-family: 'Tajawal', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0;
 }
 
-/* Flip spacing utilities for RTL */
+/* Flip inline spacing for RTL nav items */
 [dir="rtl"] .sm\:ml-6 {
     margin-left: 0;
     margin-right: 1.5rem;
@@ -212,11 +215,18 @@ dl.dl-config dd {
     margin-left: 1.5rem;
 }
 
-/* Navigation bar RTL adjustments */
-[dir="rtl"] nav .flex {
-    flex-direction: row-reverse;
+[dir="rtl"] .sm\:ml-3,
+[dir="rtl"] .ml-3 {
+    margin-left: 0;
+    margin-right: 0.75rem;
 }
 
+[dir="rtl"] .mr-1 {
+    margin-right: 0;
+    margin-left: 0.25rem;
+}
+
+/* Navigation bar RTL adjustments */
 [dir="rtl"] nav .space-x-4 > * + * {
     margin-left: 0;
     margin-right: 1rem;
@@ -238,7 +248,7 @@ dl.dl-config dd {
     left: 0;
 }
 
-/* Text alignment */
+/* Text alignment for RTL */
 [dir="rtl"] .text-left {
     text-align: right;
 }
@@ -254,27 +264,33 @@ dl.dl-config dd {
 [dir="rtl"] .pr-4 { padding-right: 0; padding-left: 1rem; }
 [dir="rtl"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
 [dir="rtl"] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
-[dir="rtl"] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
-[dir="rtl"] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
 [dir="rtl"] .ml-4 { margin-left: 0; margin-right: 1rem; }
 [dir="rtl"] .mr-4 { margin-right: 0; margin-left: 1rem; }
 
-/* Code blocks should always be LTR */
+/* Code blocks stay LTR even in RTL mode */
 [dir="rtl"] pre,
 [dir="rtl"] code,
 [dir="rtl"] .code,
 [dir="rtl"] .cm-editor,
+[dir="rtl"] .cm-line,
 [dir="rtl"] .cm-content {
     direction: ltr;
     text-align: left;
-    font-family: Menlo, Consolas, 'Liberation Mono', monospace;
-    unicode-bidi: embed;
+    font-family: var(--font-mono);
 }
 
-/* Line numbers in code should stay LTR */
-[dir="rtl"] .code .line-num {
-    text-align: right;
-    direction: ltr;
+/* Line numbers in RTL */
+[dir="rtl"] .line-num {
+    text-align: left;
+}
+
+/* Inset shadow for selected line flipped */
+[dir="rtl"] .line-code.selected {
+    box-shadow: inset -4px 0 0 rgb(255, 213, 65) !important;
+}
+
+[dir="rtl"] .dark .line-code.selected {
+    box-shadow: inset -4px 0 0 rgb(161, 128, 21) !important;
 }
 
 /* Form inputs directional */
@@ -304,20 +320,6 @@ dl.dl-config dd {
     border-left-width: 1px;
 }
 
-/* Rounded corners flip for RTL */
-[dir="rtl"] .rounded-l {
-    border-radius: 0 0.25rem 0.25rem 0;
-}
-
-[dir="rtl"] .rounded-r {
-    border-radius: 0.25rem 0 0 0.25rem;
-}
-
-/* Flex row reverse for specific RTL layouts */
-[dir="rtl"] .flex-row {
-    flex-direction: row-reverse;
-}
-
 /* Pagination RTL */
 [dir="rtl"] .pagination .older { order: 1; }
 [dir="rtl"] .pagination .newer { order: -1; }
@@ -330,4 +332,11 @@ dl.dl-config dd {
 /* SVG icons that indicate direction */
 [dir="rtl"] .icon-arrow-right {
     transform: scaleX(-1);
+}
+
+/* Footer language picker RTL */
+[dir="rtl"] #language-list {
+    right: auto;
+    left: 0;
+    transform-origin: bottom-left;
 }
